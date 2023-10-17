@@ -1,13 +1,19 @@
 #include "main.h"
+#include <unistd.h>
 
 /**
- * print_char - Prints character
- * @list: list of arguments
- * Return: Will return the amount of characters printed.
+ * print_char - print char
+ *
+ * @args: argument.
+ *
+ * Return: count of chars.
  */
 
-int print_char(va_list list)
+int print_char(va_list args)
 {
-	_putchar(va_arg(list, int));
+	char c = va_arg(args, int);
+
+	_putchar(c);
+
 	return (1);
 }

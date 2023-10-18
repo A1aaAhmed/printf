@@ -1,87 +1,77 @@
-./" This is _printf manpage
-.TH man 3 "17 May 2020" "1.0" "_printf man page"
+.\" Manpage for _printf.
+.TH _printf 3 "17 April 2022" "1.0" "User commands for _printf"
 .SH NAME
-.B _printf
-- format and data.
+ _printf - format and print data.
 .SH SYNOPSIS
-_printf FORMAT [ARGUMENT]...
+.nf
+.BI printf FORMAT [ARGUMENT]...
+.PP
+.BI "#include 'main.h'"
+.BI "#include <stdarg.h>"
+.BI "#include <unistd.h>"
+.BI "#include <stdlib.h>"
+.BI "#include <stdio.h>"
+.BI "#include <limits.h>"
+.PP
+.BI "int _printf(const char *format, ...);"
+.BI "buff_append(char *buff_dest, va_list arg, unsigned int buff_count, char (*parser)(va_list));"
+.BI "print_buff(char *buff, unsigned int nbuff);"
+.BI "str_len(char *s);"
+.BI "*_strcpy(char *dest, char *src);"
+.BI "parse_char(va_list arg);"
+.BI "int parse_string(char *buff_dest, va_list arg, int buff_count);"
+.BI "int parse_int(char *string, va_list list, int buff_count);"
+.BI "int parse_perc(char *buff_dest, va_list arg, int buff_count);"
+.BI "int parse_binary(char *buff_dest, va_list arg, int buff_count);"
+.PP
 .SH DESCRIPTION
-Print ARGUMENT(s) according to FORMAT:
-
-\\"     double quote.
-
-\\\\     backslash.
-
-\\n     new line.
-
-\\r     carriage return.
-
-\\t     horizontal tab.
-
-%%     a single %.
-
-.SH CONVERSION CHARACTERS
-.B The conversion specifiers and their meanings are:
-.IP -b 
-The unsigned int argument is converted to binary.
-
-.IP -d,i
-The int argument is converted to signed decimal notation.
-
-.IP -c
-The int argument is converted to an unsigned char, and the resulting character is written.
-
-
-.IP -o,u,x,X
-The unsigned int argument is converted to ( ) notation:
-
-unsigned octal: (o).
-
-unsigned decimal: (u).
-
-unsigned hexadecimal: (x and X).
-
-.IP -s
-Characters from the array are written up to (but not including) a terminating null byte ('\0').
-	
-.IP -S 
-Characters from the array are written up to (but not including) a terminating null byte ('\0').
-
-Not include characters (0 < ASCII value < 32 or >= 127), are printed \x, , followed by the ASCII code value in hexadecimal (upper case - always 2 characters).
-
-.IP -p
-The void * pointer argument is printed in hexadecimal (as if by %#x or %#lx).
-
-.SH EXAMPLES
-
-.IP -print a string.
-_printf("This is a string");
-_printf("%s\n", "I am a string too!");
-
-.IP print char.
-_printf("Character:[%c]\n", 'H');
-
-.IP -print integuer.
-_printf("%d, %i\n", 2, 5);
-
-.SH SEE ALSO
-
-.I printf(1), printf(3).
-
+The function _printf() prints ARGUMENTS(s) according to format, or execute according to various Option.
+.PP
+.SH RETURN VALUE
+Returns the number of all the characters printed, excluding the NULL byte used to end output to strings.
+.SH Format String Format
+The format string is a character string, which contains two types of directives: ordinary characters which are coppied to the output stream; and conversion specifiers. Each conversion specification is introduced by the character %, and ends with a conversion specifier.
+.SH Conversion Specifiers
+This are the characters that specifies the type of conversion to be applied. The conversion specifiers and their meanings are:
+.TP
+.B c
+.R The \fIint\fR argument is converted to a char, and the result is printed.
+.TP
+.B s
+.R The \fIconst char *\fR is a pointer to an array of characters, that converts the corresponding argument to a character string.
+.TP
+.B d, i
+.R The \fIint\fR argument is converted to signed decimal notation.
+.TP
+.B %, %%
+.R If only the \fI%\fR character is written no argument is converted. The complete conversion specification is \fI%%\fR, that returns the actual sign if there in front.
+.PP
+.SH NOTES
+.R The \fB_printf()\fR is a project collaboration between \fBSamuel Adebayo\fR and \fBGerald Juwah\fR, Students studing Software Engineering at \fBALX School\fR.
 .SH BUGS
+.R In process
+.PP
+.SH EXAMPLE
+.R To print the the string \fBHello ALX!\fR and its length in decimal.
 
-No known bugs.
+#include "main.h"
 
-.SH AUTHOR
+int main(void)
 
-David Orozco & Jose Parrales.
+{
 
-.SH COPYRIGHT
+	int length;
 
-Copyright © 2020 Holberton School B.
+	_printf("%s\n", "Hello, ALX!")
 
+	_printf("Hello ALX! contains %d characters\n", length);
 
-Copyright © SS64.com 1999-2020.
+	length = _printf("Hello Holberton!");
 
+	return (0);
 
-Copyright Â© 2010 Free Software Foundation, Inc. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+}
+.SH SEE ALSO
+.R printf(3)
+.SH AUTHORS
+Written by \fBSamuel Adebayo\fR and \fBGerald Juwah\fR.
